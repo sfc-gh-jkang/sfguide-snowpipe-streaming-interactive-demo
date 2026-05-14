@@ -1,0 +1,22 @@
+[project]
+name = "credit-demo"
+version = "0.4.0"
+description = "Live Credit Trading Desk demo for ACME Credit Management"
+requires-python = ">=3.11"
+dependencies = [
+    # Container Runtime requires the [snowflake] extra — bare 'streamlit' fails to
+    # bootstrap st.connection / get_active_session inside SiS. Pitfall 8 of the
+    # streamlit-container-runtime-uv skill.
+    "streamlit[snowflake]>=1.40.0",
+    "snowflake-snowpark-python[pandas]>=1.23.0",
+    "plotly>=5.24.0",
+    "pandas>=2.2.0",
+    "requests>=2.32.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

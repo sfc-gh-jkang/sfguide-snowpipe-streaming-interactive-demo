@@ -1,0 +1,9 @@
+name: credit-demo
+channels:
+  - snowflake
+dependencies:
+  - streamlit=1.40.2
+  - snowflake-snowpark-python=1.23.0
+  - plotly=5.24.1
+  - pandas=2.2.3
+  - requests=2.32.3

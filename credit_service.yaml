@@ -1,0 +1,59 @@
+spec:
+  containers:
+    - name: app
+      image: /snowflake_example/credit_demo/credit_images/credit-streamlit:latest
+      resources:
+        requests:
+          cpu: 0.5
+          memory: 1Gi
+        limits:
+          cpu: 2
+          memory: 2Gi
+      env:
+        SNOWFLAKE_WAREHOUSE: CREDIT_DEMO_WH
+        SNOWFLAKE_INTERACTIVE_WAREHOUSE: CREDIT_DEMO_INT_WH
+        OTEL_SERVICE_NAME: credit-streamlit
+        OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+        OTEL_EXPORTER_OTLP_ENDPOINT: http://localhost:4318
+        OTEL_TRACES_EXPORTER: otlp
+        OTEL_METRICS_EXPORTER: none
+        OTEL_LOGS_EXPORTER: none
+        OTEL_RESOURCE_ATTRIBUTES: deployment.environment.name=credit-demo,service.namespace=demo
+      readinessProbe:
+        port: 8080
+        path: /healthz
+
+    - name: observe-agent
+      image: /snowflake_example/credit_demo/credit_images/observe-agent:2.0.0
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 128M
+        limits:
+          cpu: 0.2
+          memory: 256M
+      volumeMounts:
+        - name: observe-config
+          mountPath: /etc/observe-agent
+      readinessProbe:
+        port: 13133
+        path: /status
+
+  endpoints:
+    - name: app
+      port: 8080
+      public: true
+
+  volumes:
+    - name: observe-config
+      source: stage
+      stageConfig:
+        name: "@SNOWFLAKE_EXAMPLE.CREDIT_DEMO.CREDIT_STAGE/observe-agent"
+      uid: 0
+      gid: 0
+
+  platformMonitor:
+    metricConfig:
+      groups:
+        - system
+        - system_limits

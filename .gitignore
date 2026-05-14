@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Secrets & credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p8
+keys/
+credentials.json
+**/secrets/
+**/*secret*
+**/*credential*
+**/*password*
+.streamlit/secrets.toml
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Observe baked config (contains tokens)
+vm-ingest/observe-agent.yaml
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+
+# Node
+node_modules/
+
+# uv lockfiles ARE committed for reproducibility — do not ignore them.
+# (uv.lock pins exact resolved dependency versions across installs.)

@@ -1,0 +1,33 @@
+{
+  "layout": {
+    "gridLayout": {
+      "sections": [
+        {
+          "card": {"stageId": "ingest_latency", "cardType": "stage"},
+          "layout": {"x": 0, "y": 0, "w": 6, "h": 4},
+          "manager": {"type": "Vis", "vegaVis": {"type": "LineChart", "color": "OBSERVATION_KIND"}}
+        },
+        {
+          "card": {"stageId": "throughput_rps", "cardType": "stage"},
+          "layout": {"x": 6, "y": 0, "w": 6, "h": 4},
+          "manager": {"type": "Vis", "vegaVis": {"type": "LineChart", "color": "OBSERVATION_KIND"}}
+        },
+        {
+          "card": {"stageId": "top_issuers_24h", "cardType": "stage"},
+          "layout": {"x": 0, "y": 4, "w": 6, "h": 4},
+          "manager": {"type": "Vis", "vegaVis": {"type": "table"}}
+        },
+        {
+          "card": {"stageId": "error_rate", "cardType": "stage"},
+          "layout": {"x": 6, "y": 4, "w": 6, "h": 4},
+          "manager": {"type": "Vis", "vegaVis": {"type": "LineChart", "color": "OBSERVATION_KIND"}}
+        }
+      ]
+    },
+    "stageListLayout": {
+      "timeRange": {
+        "millisFromCurrentTime": 86400000
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "stages": {
+    "ingest_latency": {
+      "input": [{"dataset": "HTTP Observations"}],
+      "pipeline": "filter OBSERVATION_KIND = \"http\"\nfilter string(EXTRA.metric_name) = \"credit_ingest_latency_ms\"\nmake_col OBSERVATION_KIND:string(EXTRA.metric_name)\ntimechart options(empty_bins:true), value:avg(float64(FIELDS.value)), group_by(OBSERVATION_KIND)",
+      "type": "stage",
+      "params": {}
+    },
+    "throughput_rps": {
+      "input": [{"dataset": "HTTP Observations"}],
+      "pipeline": "filter OBSERVATION_KIND = \"http\"\nfilter string(EXTRA.metric_name) = \"credit_events_per_min\"\nmake_col OBSERVATION_KIND:string(EXTRA.metric_name)\ntimechart options(empty_bins:true), value:avg(float64(FIELDS.value)), group_by(OBSERVATION_KIND)",
+      "type": "stage",
+      "params": {}
+    },
+    "top_issuers_24h": {
+      "input": [{"dataset": "HTTP Observations"}],
+      "pipeline": "filter OBSERVATION_KIND = \"http\"\nfilter string(EXTRA.metric_name) = \"credit_issuer_event_count\"\nmake_col issuer:string(EXTRA.issuer)\nmake_col count:int64(FIELDS.value)\ntop 10, count\npick_col issuer, count",
+      "type": "stage",
+      "params": {}
+    },
+    "error_rate": {
+      "input": [{"dataset": "HTTP Observations"}],
+      "pipeline": "filter OBSERVATION_KIND = \"http\"\nfilter string(EXTRA.metric_name) = \"credit_error_count\"\nmake_col OBSERVATION_KIND:string(EXTRA.metric_name)\ntimechart options(empty_bins:true), value:sum(float64(FIELDS.value)), group_by(OBSERVATION_KIND)",
+      "type": "stage",
+      "params": {}
+    }
+  }
+}
